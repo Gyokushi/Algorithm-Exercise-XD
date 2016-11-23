@@ -1,3 +1,4 @@
+#There is a bug that if cost is too large, the result will be in a mess
 source = [1,5,8,9,10,17,17,20,24,30]
 
 def cut_Bottom_Up(source,cost = 0):
