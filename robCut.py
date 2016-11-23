@@ -1,3 +1,9 @@
+'''about dynamic programming
+   a simple example in introduction of algorithm Chapter15
+   Two aproach to implement it-- Bottom up and Top down
+   the n means length not index
+'''
+
 source = [1,5,8,9,10,17,17,20,24,30]
 def cut_Bottom_Up(source):
 	n = len(source)+1
@@ -15,10 +21,10 @@ def cut_Bottom_Up(source):
 			times[i] = times[points[i]] + 1
 		else:
 			times[i] = times[points[i]]
-	print 'memo:'+' '*3 + str(memo)
+	print 'memo:   ' + str(memo)
 	print 'range:  '+ str(range(11))
 	print 'points: ' + str(points)
-	print 'times: '+ ' ' + str(times)
+	print 'times:  ' + str(times)
 
 
 # def cut_Memoized_Top_Down(source):
