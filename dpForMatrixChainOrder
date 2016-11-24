@@ -1,0 +1,28 @@
+source = [30,35,15,5,10,20,25]
+n = len(source)
+matrix = [[100000 for x in range(n)] for y in range(n)]
+s = [[100000 for x in range(n)] for y in range(n)]
+def matrix_chain_order_topDown(source,n):
+	for i in range(n):
+		matrix[i][i] = 0
+	for l in range(2,n): #chain length
+		for i in range(1,n-l+1): #start point
+			j = i + l -1
+			for k in range(i,j): #cut point
+				q = matrix[i][k] + matrix[k+1][j] + source[i-1]*source[k]*source[j]
+				if q < matrix[i][j]:
+					print 'l: ' + str(l) + ' i :' + str(i) + ' j :'+ str(j) + ' k:' + str(k)
+					print q
+					matrix[i][j] = q
+					s[i][j] = k
+
+	for i in range(n):
+		print matrix[i]
+	for i in range(n):
+		print s[i]
+
+matrix_chain_order_topDown(source,n)
+
+print 35*5*15+5*10*20+30*35*5+5*20*25+30*5*25
+
+
