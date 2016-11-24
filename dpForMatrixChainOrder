@@ -1,11 +1,14 @@
 source = [30,35,15,5,10,20,25]
 #source = [5,10,3,12,5,50,6]
 n = len(source)
-matrix = [[100000 for x in range(n)] for y in range(n)]
-s = [[100000 for x in range(n)] for y in range(n)]
-def matrix_chain_order_topDown(source,n):
+
+
+def matrix_chain_order_bottom_up(source,n):
+	matrix = [[100000 for x in range(n)] for y in range(n)]
+	s = [[0 for x in range(n)] for y in range(n)]
 	for i in range(n):
 		matrix[i][i] = 0
+
 	for l in range(2,n): #chain length
 		for i in range(1,n-l+1): #start point
 			j = i + l -1
@@ -14,8 +17,6 @@ def matrix_chain_order_topDown(source,n):
 				if q < matrix[i][j]:
 					matrix[i][j] = q
 					s[i][j] = k
-	for i in range(n):
-		print s[i]
 
 	def printParathesis(head,rear):
 		cutPoint = s[head][rear]
@@ -25,10 +26,53 @@ def matrix_chain_order_topDown(source,n):
 			printParathesis(head,cutPoint)
 			printParathesis(cutPoint+1,rear)
 			print ')'
-	printParathesis(1,n-1)
+	#printParathesis(1,n-1)
+	for i in range(n):
+		print matrix[i]
 
 
-matrix_chain_order_topDown(source,n)
+
+def matrix_chain_order_top_down(source,n):
+	matrix = [[100000 for x in range(n)] for y in range(n)]
+	s = [[0 for x in range(n)] for y in range(n)]
+	for i in range(n):
+		matrix[i][i] = 0
+
+	def aux(head,rear):
+		if rear == head: return matrix[head][rear]
+		elif matrix[head][rear] < 100000: return matrix[head][rear]
+		else:
+			for i in range(head,rear):
+				q = aux(head,i) + aux(i+1,rear) + source[head-1]*source[i]*source[rear]
+				#print 'head ' + str(head) + ' i ' + str(i) + ' rear ' + str(rear) + '   ' + str(source[head-1]*source[i]*source[rear])
+				if q < matrix[head][rear]:
+					matrix[head][rear] = q
+					s[head][rear] = i
+			return matrix[head][rear]
+
+	for i in range(1,n-1):
+		q = aux(1,i) + aux(i+1,n-1) + source[0]*source[i]*source[n-1]
+		if q < matrix[1][n-1]:
+			matrix[1][n-1] = q
+			s[1][n-1] = i
+
+	def print1(head,rear):
+		if head == rear: print 'A' + str(head)
+		else: 
+			print '('
+			print1(head,s[head][rear])
+			print1(s[head][rear]+1,rear)
+			print ')'
+
+	print1(1,n-1)
+
+
+
+
+
+
+matrix_chain_order_bottom_up(source,n)
+matrix_chain_order_top_down(source,n)
 
 
 
