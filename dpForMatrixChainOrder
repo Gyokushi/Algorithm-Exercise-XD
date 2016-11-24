@@ -1,4 +1,5 @@
 source = [30,35,15,5,10,20,25]
+#source = [5,10,3,12,5,50,6]
 n = len(source)
 matrix = [[100000 for x in range(n)] for y in range(n)]
 s = [[100000 for x in range(n)] for y in range(n)]
@@ -11,18 +12,24 @@ def matrix_chain_order_topDown(source,n):
 			for k in range(i,j): #cut point
 				q = matrix[i][k] + matrix[k+1][j] + source[i-1]*source[k]*source[j]
 				if q < matrix[i][j]:
-					print 'l: ' + str(l) + ' i :' + str(i) + ' j :'+ str(j) + ' k:' + str(k)
-					print q
 					matrix[i][j] = q
 					s[i][j] = k
-
-	for i in range(n):
-		print matrix[i]
 	for i in range(n):
 		print s[i]
 
+	def printParathesis(head,rear):
+		cutPoint = s[head][rear]
+		if rear==head: print 'A' + str(rear)
+		else: 
+			print '('
+			printParathesis(head,cutPoint)
+			printParathesis(cutPoint+1,rear)
+			print ')'
+	printParathesis(1,n-1)
+
+
 matrix_chain_order_topDown(source,n)
 
-print 35*5*15+5*10*20+30*35*5+5*20*25+30*5*25
+
 
 
